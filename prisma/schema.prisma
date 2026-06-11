@@ -1,0 +1,54 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider  = "postgresql"
+}
+
+model User {
+    id         String     @id @default(cuid())
+    email      String     @unique
+    password   String
+    createdAt  DateTime   @default(now())
+    updatedAt  DateTime   @updatedAt
+    categories Category[]
+    expenses   Expense[]
+    budgets    Budget[]
+}
+
+model Category {
+    id        String    @id @default(cuid())
+    name      String
+    isSystem  Boolean   @default(false)
+    userId    String?
+    user      User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    expenses  Expense[]
+    budgets   Budget[]
+}
+
+model Expense {
+    id          String    @id @default(cuid())
+    amount      Decimal   @db.Decimal(10, 2)
+    date        DateTime
+    description String?
+    userId      String
+    user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+    categoryId  String
+    category    Category  @relation(fields: [categoryId], references: [id])
+    createdAt   DateTime  @default(now())
+    updatedAt   DateTime  @updatedAt
+}
+
+model Budget {
+    id         String    @id @default(cuid())
+    month      Int
+    year       Int
+    limitAmount Decimal  @db.Decimal(10, 2)
+    userId     String
+    user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+    categoryId String?
+    category   Category? @relation(fields: [categoryId], references: [id])
+    createdAt  DateTime  @default(now())
+    updatedAt  DateTime  @updatedAt
+}
