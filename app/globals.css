@@ -120,3 +120,23 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 }
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #131b2e;
+  border-radius: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #3893c7;
+  border-radius: 8px;
+  border: 2px solid #131b2e;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #60a8d2;
+}
