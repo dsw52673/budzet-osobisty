@@ -43,11 +43,11 @@ export async function middleware(req: NextRequest) {
         }
     }
 
-    const isAuthPage = pathname === "/login" || pathname === "/register"
+    const isAuthPage = pathname === "/register"
 
     if (!token) {
         if (!isAuthPage && pathname !== "/") {
-            return NextResponse.redirect(new URL("/login", req.url))
+            return NextResponse.redirect(new URL("/", req.url))
         }
         return NextResponse.next()
     }
@@ -60,7 +60,7 @@ export async function middleware(req: NextRequest) {
         return NextResponse.next()
     } catch {
         if (!isAuthPage && pathname !== "/") {
-            return NextResponse.redirect(new URL("/login", req.url))
+            return NextResponse.redirect(new URL("/", req.url))
         }
         return NextResponse.next()
     }

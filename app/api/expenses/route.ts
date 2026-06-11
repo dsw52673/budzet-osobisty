@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
+import { Prisma } from "@prisma/client"
 import { prisma } from "../../lib/prisma"
 
 export async function GET(req: NextRequest) {
@@ -18,7 +19,7 @@ export async function GET(req: NextRequest) {
         const minAmount = searchParams.get("minAmount")
         const maxAmount = searchParams.get("maxAmount")
 
-        const where: any = { userId }
+        const where: Prisma.ExpenseWhereInput = { userId }
 
         if (categoryId) {
             where.categoryId = categoryId
