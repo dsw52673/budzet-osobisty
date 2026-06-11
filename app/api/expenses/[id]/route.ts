@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
+import { Prisma } from "@prisma/client"
 import { prisma } from "../../../lib/prisma"
 
 export async function GET(
@@ -81,7 +82,7 @@ export async function PUT(
 
         const body = await req.json()
         const { amount, date, categoryId, description } = body
-        const updateData: any = {}
+        const updateData: Prisma.ExpenseUncheckedUpdateInput = {}
 
         if (amount !== undefined) {
             if (typeof amount !== "number" || amount <= 0) {
