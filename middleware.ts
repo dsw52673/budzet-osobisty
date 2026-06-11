@@ -27,8 +27,14 @@ export async function middleware(req: NextRequest) {
         }
 
         try {
-            await verifyToken(apiToken)
-            return NextResponse.next()
+            const decoded = await verifyToken(apiToken)
+            const requestHeaders = new Headers(req.headers)
+            requestHeaders.set("x-user-id", decoded.userId)
+            return NextResponse.next({
+                request: {
+                    headers: requestHeaders,
+                },
+            })
         } catch {
             return NextResponse.json(
                 { error: "Unauthorized" },
