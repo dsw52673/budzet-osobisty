@@ -37,6 +37,8 @@ interface DashboardContextType {
     setExpenseDescription: (desc: string) => void
     expenseDate: string
     setExpenseDate: (date: string) => void
+    expenseCurrency: string
+    setExpenseCurrency: (currency: string) => void
     isCatDropdownOpen: boolean
     setIsCatDropdownOpen: (open: boolean) => void
     error: string
