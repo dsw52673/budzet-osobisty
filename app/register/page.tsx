@@ -53,8 +53,7 @@ export default function RegisterPage() {
             }
 
             document.cookie = `token=${data.token}; path=/; max-age=${7 * 24 * 60 * 60}; SameSite=Strict; Secure`
-            router.push("/")
-            router.refresh()
+            window.location.href = "/"
         } catch {
             setError("Błąd połączenia z serwerem")
             setLoading(false)
