@@ -27,6 +27,8 @@ interface DashboardContextType {
     setIsAllTransactionsModalOpen: (open: boolean) => void
     deletingId: string | null
     setDeletingId: (id: string | null) => void
+    editingExpenseId: string | null
+    setEditingExpenseId: (id: string | null) => void
     budgetLimit: string
     setBudgetLimit: (limit: string) => void
     expenseAmount: string
@@ -67,6 +69,7 @@ interface DashboardContextType {
     // Actions
     handleSaveBudget: (e: React.FormEvent) => Promise<void>
     handleAddExpense: (e: React.FormEvent) => Promise<void>
+    handleEditExpense: (e: React.FormEvent) => Promise<void>
     handleDeleteExpense: (id: string) => Promise<void>
     incrementBudget: () => void
     decrementBudget: () => void
