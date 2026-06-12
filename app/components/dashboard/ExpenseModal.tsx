@@ -14,6 +14,8 @@ export default function ExpenseModal() {
         setExpenseDescription,
         expenseDate,
         setExpenseDate,
+        expenseCurrency,
+        setExpenseCurrency,
         categories,
         isCatDropdownOpen,
         setIsCatDropdownOpen,
@@ -58,41 +60,59 @@ export default function ExpenseModal() {
                     </div>
                 )}
 
-                <form onSubmit={editingExpenseId ? handleEditExpense : handleAddExpense} className="space-y-4">
-                    <div>
-                        <label htmlFor="expense-amount-input" className="block text-xs font-bold text-slate-405 uppercase tracking-wider mb-2">Kwota (PLN)</label>
-                        <div className="relative">
-                            <input
-                                id="expense-amount-input"
-                                type="number"
-                                required
-                                min="0.01"
-                                step="any"
-                                value={expenseAmount}
-                                onChange={(e) => setExpenseAmount(e.target.value)}
-                                className="w-full pl-4 pr-12 py-3.5 bg-[#252f48] border border-transparent rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-500 text-sm [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                                placeholder="np. 24.50"
-                            />
-                            <div className="absolute inset-y-0 right-0 flex flex-col w-10 border-l border-slate-700/45">
-                                <button
-                                    type="button"
-                                    onClick={incrementAmount}
-                                    className="flex-1 flex items-center justify-center hover:bg-slate-700/40 text-slate-400 hover:text-white rounded-tr-2xl transition-colors cursor-pointer border-b border-slate-700/45"
-                                >
-                                    <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
-                                    </svg>
-                                </button>
-                                <button
-                                    type="button"
-                                    onClick={decrementAmount}
-                                    className="flex-1 flex items-center justify-center hover:bg-slate-700/40 text-slate-400 hover:text-white rounded-br-2xl transition-colors cursor-pointer"
-                                >
-                                    <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                                    </svg>
-                                </button>
+                <form onSubmit={handleAddExpense} className="space-y-4">
+                    <div className="flex gap-3">
+                        <div className="flex-1">
+                            <label htmlFor="expense-amount-input" className="block text-xs font-bold text-slate-405 uppercase tracking-wider mb-2">Kwota</label>
+                            <div className="relative">
+                                <input
+                                    id="expense-amount-input"
+                                    type="number"
+                                    required
+                                    min="0.01"
+                                    step="any"
+                                    value={expenseAmount}
+                                    onChange={(e) => setExpenseAmount(e.target.value)}
+                                    className="w-full pl-4 pr-12 py-3.5 bg-[#252f48] border border-transparent rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-500 text-sm [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                    placeholder="np. 24.50"
+                                />
+                                <div className="absolute inset-y-0 right-0 flex flex-col w-10 border-l border-slate-700/45">
+                                    <button
+                                        type="button"
+                                        onClick={incrementAmount}
+                                        className="flex-1 flex items-center justify-center hover:bg-slate-700/40 text-slate-400 hover:text-white rounded-tr-2xl transition-colors cursor-pointer border-b border-slate-700/45"
+                                    >
+                                        <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+                                        </svg>
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={decrementAmount}
+                                        className="flex-1 flex items-center justify-center hover:bg-slate-700/40 text-slate-400 hover:text-white rounded-br-2xl transition-colors cursor-pointer"
+                                    >
+                                        <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                        </svg>
+                                    </button>
+                                </div>
                             </div>
+                        </div>
+                        <div className="w-28">
+                            <label htmlFor="expense-currency-select" className="block text-xs font-bold text-slate-405 uppercase tracking-wider mb-2">Waluta</label>
+                            <select
+                                id="expense-currency-select"
+                                value={expenseCurrency}
+                                onChange={(e) => setExpenseCurrency(e.target.value)}
+                                className="w-full px-4 py-3.5 bg-[#252f48] border border-transparent rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-slate-500 text-sm cursor-pointer"
+                            >
+                                <option value="PLN">PLN</option>
+                                <option value="EUR">EUR</option>
+                                <option value="USD">USD</option>
+                                <option value="GBP">GBP</option>
+                                <option value="CHF">CHF</option>
+                                <option value="NOK">NOK</option>
+                            </select>
                         </div>
                     </div>
 

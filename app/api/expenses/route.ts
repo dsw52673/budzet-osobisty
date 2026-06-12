@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server"
 import { Prisma } from "@prisma/client"
 import { prisma } from "../../lib/prisma"
+import { getExchangeRate } from "../../lib/services/exchangeRates"
+
+const SUPPORTED_CURRENCIES = ["PLN", "EUR", "USD", "GBP", "CHF", "NOK"]
 
 export async function GET(req: NextRequest) {
     try {
@@ -75,7 +78,7 @@ export async function POST(req: NextRequest) {
         }
 
         const body = await req.json()
-        const { amount, date, categoryId, description } = body
+        const { amount, date, categoryId, description, currency } = body
 
         if (amount === undefined || amount === null || typeof amount !== "number" || amount <= 0) {
             return NextResponse.json(
@@ -105,6 +108,14 @@ export async function POST(req: NextRequest) {
             )
         }
 
+        const selectedCurrency = (currency || "PLN").toUpperCase()
+        if (!SUPPORTED_CURRENCIES.includes(selectedCurrency)) {
+            return NextResponse.json(
+                { error: "Nieobsługiwana waluta" },
+                { status: 400 }
+            )
+        }
+
         const category = await prisma.category.findFirst({
             where: {
                 id: categoryId,
@@ -122,9 +133,26 @@ export async function POST(req: NextRequest) {
             )
         }
 
+        let rate = 1.0
+        if (selectedCurrency !== "PLN") {
+            try {
+                rate = await getExchangeRate(selectedCurrency, date)
+            } catch {
+                return NextResponse.json(
+                    { error: "Nie udało się pobrać kursu waluty" },
+                    { status: 400 }
+                )
+            }
+        }
+
+        const amountInBase = Number((amount * rate).toFixed(2))
+
         const expense = await prisma.expense.create({
             data: {
                 amount,
+                currency: selectedCurrency,
+                amountInBase,
+                exchangeRate: rate,
                 date: new Date(date),
                 categoryId,
                 userId,
@@ -136,7 +164,7 @@ export async function POST(req: NextRequest) {
         })
 
         return NextResponse.json(expense, { status: 201 })
-    } catch {
+    } catch (err) {
         return NextResponse.json(
             { error: "Błąd serwera" },
             { status: 500 }

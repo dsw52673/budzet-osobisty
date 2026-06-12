@@ -71,7 +71,7 @@ export async function GET(req: NextRequest) {
             })
         ])
 
-        const totalSpent = expenses.reduce((sum, exp) => sum + Number(exp.amount), 0)
+        const totalSpent = expenses.reduce((sum, exp) => sum + Number(exp.amountInBase), 0)
 
         const generalBudget = budgets.find(b => b.categoryId === null)
         const totalBudget = generalBudget ? Number(generalBudget.limitAmount) : null
@@ -79,7 +79,7 @@ export async function GET(req: NextRequest) {
 
         const categoryStats = categories.map(category => {
             const catExpenses = expenses.filter(e => e.categoryId === category.id)
-            const spent = catExpenses.reduce((sum, exp) => sum + Number(exp.amount), 0)
+            const spent = catExpenses.reduce((sum, exp) => sum + Number(exp.amountInBase), 0)
 
             const catBudgetObj = budgets.find(b => b.categoryId === category.id)
             const budget = catBudgetObj ? Number(catBudgetObj.limitAmount) : null
