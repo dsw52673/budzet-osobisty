@@ -10,6 +10,7 @@ export function useDashboardData() {
     const [isExpenseModalOpen, setIsExpenseModalOpen] = useState(false)
     const [isAllTransactionsModalOpen, setIsAllTransactionsModalOpen] = useState(false)
     const [deletingId, setDeletingId] = useState<string | null>(null)
+    const [editingExpenseId, setEditingExpenseId] = useState<string | null>(null)
 
     const [budgetLimit, setBudgetLimit] = useState("")
     const [expenseAmount, setExpenseAmount] = useState("")
@@ -47,7 +48,7 @@ export function useDashboardData() {
                     setExpenseCategoryId(categoriesData[0].id)
                 }
             }
-        } catch {}
+        } catch { }
     }, [])
 
     useEffect(() => {
@@ -127,6 +128,46 @@ export function useDashboardData() {
         }
     }
 
+    const handleEditExpense = async (e: React.FormEvent) => {
+        e.preventDefault()
+        if (!editingExpenseId) return
+        setError("")
+        setLoading(true)
+
+        try {
+            const res = await fetch(`/api/expenses/${editingExpenseId}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    amount: Number(expenseAmount),
+                    date: expenseDate ? new Date(expenseDate).toISOString() : new Date().toISOString(),
+                    categoryId: expenseCategoryId,
+                    description: expenseDescription
+                })
+            })
+
+            if (!res.ok) {
+                const data = await res.json()
+                setError(data.error || "Wystąpił błąd")
+                setLoading(false)
+                return
+            }
+
+            setIsExpenseModalOpen(false)
+            setEditingExpenseId(null)
+            setExpenseAmount("")
+            setExpenseDescription("")
+            setExpenseDate("")
+            setLoading(false)
+            fetchData()
+        } catch {
+            setError("Błąd połączenia")
+            setLoading(false)
+        }
+    }
+
     const handleDeleteExpense = async (id: string) => {
         try {
             const res = await fetch(`/api/expenses/${id}`, {
@@ -136,7 +177,7 @@ export function useDashboardData() {
                 setDeletingId(null)
                 fetchData()
             }
-        } catch {}
+        } catch { }
     }
 
     const incrementBudget = () => {
@@ -179,6 +220,8 @@ export function useDashboardData() {
         setIsAllTransactionsModalOpen,
         deletingId,
         setDeletingId,
+        editingExpenseId,
+        setEditingExpenseId,
         budgetLimit,
         setBudgetLimit,
         expenseAmount,
@@ -198,6 +241,7 @@ export function useDashboardData() {
         currentYear,
         handleSaveBudget,
         handleAddExpense,
+        handleEditExpense,
         handleDeleteExpense,
         incrementBudget,
         decrementBudget,
