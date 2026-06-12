@@ -22,7 +22,7 @@ export default function Sidebar() {
                     </svg>
                 </div>
                 <div>
-                    <h2 className="text-lg font-bold text-white leading-none">Budget</h2>
+                    <h2 className="text-lg font-bold text-white leading-none">Budżet osobisty</h2>
                 </div>
             </div>
 
@@ -53,6 +53,18 @@ export default function Sidebar() {
                         <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     </svg>
                     <span>Profil</span>
+                </Link>
+                <Link
+                    href="/transactions"
+                    className={`flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-colors cursor-pointer ${pathname === "/transactions"
+                            ? "bg-[#252f48] text-white"
+                            : "text-slate-400 hover:text-white hover:bg-[#252f48]/40"
+                        }`}
+                >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span>Transakcje</span>
                 </Link>
             </nav>
 

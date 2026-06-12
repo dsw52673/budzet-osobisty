@@ -20,6 +20,9 @@ export default function ExpenseModal() {
         isCatDropdownOpen,
         setIsCatDropdownOpen,
         handleAddExpense,
+        handleEditExpense,
+        editingExpenseId,
+        setEditingExpenseId,
         incrementAmount,
         decrementAmount
     } = useDashboard()
@@ -34,11 +37,14 @@ export default function ExpenseModal() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#0a1120]/80 backdrop-blur-sm p-4">
             <div className="w-full max-w-md bg-[#1b253b] border border-slate-800/40 rounded-[2.5rem] p-8 sm:p-10 shadow-2xl flex flex-col">
                 <div className="flex justify-between items-center mb-6">
-                    <h3 className="text-xl font-bold text-white">Dodaj nowy wydatek</h3>
+                    <h3 className="text-xl font-bold text-white">
+                        {editingExpenseId ? "Edytuj wydatek" : "Dodaj nowy wydatek"}
+                    </h3>
                     <button
                         onClick={() => {
                             setIsExpenseModalOpen(false)
                             setIsCatDropdownOpen(false)
+                            setEditingExpenseId(null)
                         }}
                         className="text-slate-400 hover:text-white cursor-pointer"
                     >
@@ -174,7 +180,7 @@ export default function ExpenseModal() {
                     >
                         {loading ? (
                             <div className="animate-spin h-5 w-5 border-2 border-[#0a1120] border-t-transparent rounded-full" />
-                        ) : "Dodaj wydatek"}
+                        ) : (editingExpenseId ? "Zapisz zmiany" : "Dodaj wydatek")}
                     </button>
                 </form>
             </div>
