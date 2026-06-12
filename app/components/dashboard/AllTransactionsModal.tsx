@@ -50,7 +50,16 @@ export default function AllTransactionsModal() {
                                             {item.description || "—"}
                                         </td>
                                         <td className="py-4 text-slate-400 font-semibold">{formatDate(item.date)}</td>
-                                        <td className="py-4 text-right font-black text-white">-{Number(item.amount).toFixed(2)} PLN</td>
+                                        <td className="py-4 text-right">
+                                            <div className="font-black text-white">
+                                                -{Number(item.amount).toFixed(2)} {item.currency || "PLN"}
+                                            </div>
+                                            {item.currency && item.currency !== "PLN" && (
+                                                <div className="text-[10px] text-slate-400 font-semibold mt-0.5">
+                                                    ~{Number(item.amountInBase).toFixed(2)} PLN
+                                                </div>
+                                            )}
+                                        </td>
                                         <td className="py-4 text-right">
                                             {deletingId === item.id ? (
                                                 <div className="flex items-center justify-end gap-1.5">

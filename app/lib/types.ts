@@ -7,6 +7,9 @@ export interface Category {
 export interface Expense {
   id: string
   amount: string | number
+  currency: string
+  amountInBase: string | number
+  exchangeRate: string | number
   date: string
   description: string | null
   categoryId: string

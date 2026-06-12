@@ -16,6 +16,7 @@ export function useDashboardData() {
     const [expenseCategoryId, setExpenseCategoryId] = useState("")
     const [expenseDescription, setExpenseDescription] = useState("")
     const [expenseDate, setExpenseDate] = useState("")
+    const [expenseCurrency, setExpenseCurrency] = useState("PLN")
 
     const [isCatDropdownOpen, setIsCatDropdownOpen] = useState(false)
 
@@ -104,7 +105,8 @@ export function useDashboardData() {
                     amount: Number(expenseAmount),
                     date: expenseDate ? new Date(expenseDate).toISOString() : new Date().toISOString(),
                     categoryId: expenseCategoryId,
-                    description: expenseDescription
+                    description: expenseDescription,
+                    currency: expenseCurrency
                 })
             })
 
@@ -119,6 +121,7 @@ export function useDashboardData() {
             setExpenseAmount("")
             setExpenseDescription("")
             setExpenseDate("")
+            setExpenseCurrency("PLN")
             setLoading(false)
             fetchData()
         } catch {
@@ -189,6 +192,8 @@ export function useDashboardData() {
         setExpenseDescription,
         expenseDate,
         setExpenseDate,
+        expenseCurrency,
+        setExpenseCurrency,
         isCatDropdownOpen,
         setIsCatDropdownOpen,
         error,

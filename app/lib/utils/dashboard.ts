@@ -32,7 +32,7 @@ export function calculateDashboardStats(
         return d.getMonth() + 1 === currentMonth && d.getFullYear() === currentYear
     })
 
-    const totalExpenses = currentMonthExpenses.reduce((sum, e) => sum + Number(e.amount), 0)
+    const totalExpenses = currentMonthExpenses.reduce((sum, e) => sum + (e.amountInBase !== undefined && e.amountInBase !== null ? Number(e.amountInBase) : Number(e.amount)), 0)
     const availableFunds = totalBudgetLimit - totalExpenses
     const percentUsed = totalBudgetLimit > 0 ? (totalExpenses / totalBudgetLimit) * 100 : 0
 
@@ -50,10 +50,11 @@ export function calculateWeeklyOverview(currentMonthExpenses: Expense[]) {
     currentMonthExpenses.forEach((e) => {
         const d = new Date(e.date)
         const day = d.getDate()
-        if (day <= 7) weeklyExpenses[0] += Number(e.amount)
-        else if (day <= 14) weeklyExpenses[1] += Number(e.amount)
-        else if (day <= 21) weeklyExpenses[2] += Number(e.amount)
-        else weeklyExpenses[3] += Number(e.amount)
+        const amountToUse = e.amountInBase !== undefined && e.amountInBase !== null ? Number(e.amountInBase) : Number(e.amount)
+        if (day <= 7) weeklyExpenses[0] += amountToUse
+        else if (day <= 14) weeklyExpenses[1] += amountToUse
+        else if (day <= 21) weeklyExpenses[2] += amountToUse
+        else weeklyExpenses[3] += amountToUse
     })
     const maxWeekly = Math.max(...weeklyExpenses, 1)
     return {
@@ -69,7 +70,8 @@ export function groupExpensesByCategory(currentMonthExpenses: Expense[]) {
         if (!categoryMap[catName]) {
             categoryMap[catName] = { amount: 0, name: catName }
         }
-        categoryMap[catName].amount += Number(e.amount)
+        const amountToUse = e.amountInBase !== undefined && e.amountInBase !== null ? Number(e.amountInBase) : Number(e.amount)
+        categoryMap[catName].amount += amountToUse
     })
     return Object.values(categoryMap).sort((a, b) => b.amount - a.amount)
 }

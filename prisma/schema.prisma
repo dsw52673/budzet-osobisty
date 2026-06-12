@@ -28,16 +28,19 @@ model Category {
 }
 
 model Expense {
-    id          String    @id @default(cuid())
-    amount      Decimal   @db.Decimal(10, 2)
-    date        DateTime
-    description String?
-    userId      String
-    user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-    categoryId  String
-    category    Category  @relation(fields: [categoryId], references: [id])
-    createdAt   DateTime  @default(now())
-    updatedAt   DateTime  @updatedAt
+    id           String   @id @default(cuid())
+    amount       Decimal  @db.Decimal(10, 2)
+    currency     String   @default("PLN")
+    amountInBase Decimal  @default(0) @db.Decimal(10, 2)
+    exchangeRate Decimal  @default(1.0) @db.Decimal(12, 6)
+    date         DateTime
+    description  String?
+    userId       String
+    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    categoryId   String
+    category     Category @relation(fields: [categoryId], references: [id])
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt
 }
 
 model Budget {

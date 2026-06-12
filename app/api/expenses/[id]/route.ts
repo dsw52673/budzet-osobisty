@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server"
 import { Prisma } from "@prisma/client"
 import { prisma } from "../../../lib/prisma"
+import { getExchangeRate } from "../../../lib/services/exchangeRates"
+
+const SUPPORTED_CURRENCIES = ["PLN", "EUR", "USD", "GBP", "CHF", "NOK"]
 
 export async function GET(
     req: NextRequest,
@@ -81,7 +84,7 @@ export async function PUT(
         }
 
         const body = await req.json()
-        const { amount, date, categoryId, description } = body
+        const { amount, date, categoryId, description, currency } = body
         const updateData: Prisma.ExpenseUncheckedUpdateInput = {}
 
         if (amount !== undefined) {
@@ -137,6 +140,37 @@ export async function PUT(
                 )
             }
             updateData.description = description || null
+        }
+
+        if (currency !== undefined) {
+            if (typeof currency !== "string" || !SUPPORTED_CURRENCIES.includes(currency.toUpperCase())) {
+                return NextResponse.json(
+                    { error: "Nieobsługiwana waluta" },
+                    { status: 400 }
+                )
+            }
+        }
+
+        if (amount !== undefined || date !== undefined || currency !== undefined) {
+            const finalAmount = amount !== undefined ? amount : Number(expense.amount)
+            const finalCurrency = currency !== undefined ? currency.toUpperCase() : expense.currency
+            const finalDate = date !== undefined ? new Date(date) : new Date(expense.date)
+
+            let rate = 1.0
+            if (finalCurrency !== "PLN") {
+                try {
+                    rate = await getExchangeRate(finalCurrency, finalDate.toISOString())
+                } catch {
+                    return NextResponse.json(
+                        { error: "Nie udało się pobrać kursu waluty" },
+                        { status: 400 }
+                    )
+                }
+            }
+
+            updateData.currency = finalCurrency
+            updateData.exchangeRate = rate
+            updateData.amountInBase = Number((finalAmount * rate).toFixed(2))
         }
 
         const updatedExpense = await prisma.expense.update({
