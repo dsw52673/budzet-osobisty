@@ -43,26 +43,32 @@ export async function middleware(req: NextRequest) {
         }
     }
 
-    const isAuthPage = pathname === "/register"
+    const isAuthPage = pathname === "/login" || pathname === "/register"
 
-    if (!token) {
-        if (!isAuthPage && pathname !== "/") {
-            return NextResponse.redirect(new URL("/", req.url))
+    let isValidUser = false
+    if (token) {
+        try {
+            await verifyToken(token)
+            isValidUser = true
+        } catch {
+            isValidUser = false
         }
-        return NextResponse.next()
     }
 
-    try {
-        await verifyToken(token)
+    if (isValidUser) {
         if (isAuthPage) {
             return NextResponse.redirect(new URL("/", req.url))
         }
         return NextResponse.next()
-    } catch {
-        if (!isAuthPage && pathname !== "/") {
-            return NextResponse.redirect(new URL("/", req.url))
+    } else {
+        if (isAuthPage) {
+            return NextResponse.next()
         }
-        return NextResponse.next()
+        const response = NextResponse.redirect(new URL("/login", req.url))
+        if (token) {
+            response.cookies.delete("token")
+        }
+        return response
     }
 }
 
