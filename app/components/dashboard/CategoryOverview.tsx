@@ -4,17 +4,17 @@ export default function CategoryOverview() {
     const { categoryList, totalExpenses } = useDashboard()
 
     return (
-        <div className="bg-[#1b253b] border border-slate-800/40 rounded-[2rem] p-6 sm:p-8 flex flex-col">
-            <h3 className="text-lg sm:text-xl font-bold text-white mb-6">Wydatki wg Kategorii</h3>
+        <div className="bg-[#1b253b] border border-slate-800/40 rounded-[2rem] p-6 sm:p-8 lg:p-4 xl:p-6 flex flex-col">
+            <h3 className="text-lg sm:text-xl font-bold text-white mb-6 lg:mb-3 xl:mb-6">Wydatki wg Kategorii</h3>
 
             {categoryList.length > 0 ? (
-                <div className="flex-1 space-y-4">
+                <div className="flex-1 space-y-4 lg:space-y-2.5 xl:space-y-4 overflow-y-auto custom-scrollbar pr-1">
                     {categoryList.map((item, idx) => {
                         const percent = totalExpenses > 0 ? (item.amount / totalExpenses) * 100 : 0
                         const colors = ["bg-[#67bffe]", "bg-[#34aafe]", "bg-[#4796b8]", "bg-[#3ba2c4]"]
                         const colorClass = colors[idx % colors.length]
                         return (
-                            <div key={item.name} className="space-y-1.5">
+                            <div key={item.name} className="space-y-1.5 lg:space-y-1 xl:space-y-1.5">
                                 <div className="flex items-center justify-between text-sm">
                                     <div className="flex items-center gap-2">
                                         <span className={`w-2.5 h-2.5 rounded-full ${colorClass}`} />

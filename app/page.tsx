@@ -1,18 +1,14 @@
 "use client"
 
 import Sidebar from "./components/dashboard/Sidebar"
-import Header from "./components/dashboard/Header"
 import BudgetAlert from "./components/dashboard/BudgetAlert"
 import MonthlyOverview from "./components/dashboard/MonthlyOverview"
 import LimitAndBudget from "./components/dashboard/LimitAndBudget"
 import CategoryOverview from "./components/dashboard/CategoryOverview"
 import RecentTransactions from "./components/dashboard/RecentTransactions"
-import BudgetModal from "./components/dashboard/BudgetModal"
-import ExpenseModal from "./components/dashboard/ExpenseModal"
-import AllTransactionsModal from "./components/dashboard/AllTransactionsModal"
-import { DashboardProvider, useDashboard } from "./context/DashboardContext"
+import { useDashboard } from "./context/DashboardContext"
 
-function DashboardContent() {
+export default function Home() {
     const { checkingToken, userEmail } = useDashboard()
 
     if (checkingToken) {
@@ -28,38 +24,24 @@ function DashboardContent() {
     }
 
     return (
-        <main className="min-h-screen flex bg-[#0a1120] text-slate-100 font-sans">
+        <main className="min-h-screen lg:h-screen flex bg-[#0a1120] text-slate-100 font-sans lg:overflow-hidden">
             <Sidebar />
 
-            <section className="flex-1 flex flex-col min-w-0 overflow-y-auto">
-                <Header />
-
-                <div className="p-6 md:p-10 space-y-8">
+            <section className="flex-1 flex flex-col min-w-0 h-screen overflow-y-auto lg:overflow-hidden">
+                <div className="flex-1 flex flex-col p-6 md:p-8 lg:p-6 space-y-6 lg:space-y-5 xl:space-y-6 min-h-0">
                     <BudgetAlert />
 
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 xl:gap-8 lg:flex-[1.3] lg:min-h-0">
                         <MonthlyOverview />
                         <LimitAndBudget />
+                        <CategoryOverview />
                     </div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                        <CategoryOverview />
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 xl:gap-8 lg:flex-1 lg:min-h-0">
                         <RecentTransactions />
                     </div>
                 </div>
             </section>
-
-            <BudgetModal />
-            <ExpenseModal />
-            <AllTransactionsModal />
         </main>
-    )
-}
-
-export default function Home() {
-    return (
-        <DashboardProvider>
-            <DashboardContent />
-        </DashboardProvider>
     )
 }

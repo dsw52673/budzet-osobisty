@@ -20,8 +20,8 @@ export default function TransactionTable({
                         <thead>
                             <tr className="border-b border-slate-800/60 text-slate-400 font-bold text-xs uppercase tracking-wider">
                                 <th className="pb-3">Kategoria</th>
-                                <th className="pb-3">Opis</th>
-                                <th className="pb-3">Data</th>
+                                <th className="pb-3 hidden sm:table-cell">Opis</th>
+                                <th className="pb-3 hidden sm:table-cell">Data</th>
                                 <th className="pb-3 text-right">Kwota</th>
                                 <th className="pb-3 text-right w-32">Akcje</th>
                             </tr>

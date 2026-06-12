@@ -23,8 +23,6 @@ interface DashboardContextType {
     setIsBudgetModalOpen: (open: boolean) => void
     isExpenseModalOpen: boolean
     setIsExpenseModalOpen: (open: boolean) => void
-    isAllTransactionsModalOpen: boolean
-    setIsAllTransactionsModalOpen: (open: boolean) => void
     deletingId: string | null
     setDeletingId: (id: string | null) => void
     editingExpenseId: string | null
@@ -43,6 +41,8 @@ interface DashboardContextType {
     setExpenseCurrency: (currency: string) => void
     isCatDropdownOpen: boolean
     setIsCatDropdownOpen: (open: boolean) => void
+    isMobileSidebarOpen: boolean
+    setIsMobileSidebarOpen: (open: boolean) => void
     error: string
     setError: (err: string) => void
     loading: boolean

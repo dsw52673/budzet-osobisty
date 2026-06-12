@@ -2,10 +2,9 @@
 
 import { useState } from "react"
 import Sidebar from "../components/dashboard/Sidebar"
-import Header from "../components/dashboard/Header"
-import { DashboardProvider, useDashboard } from "../context/DashboardContext"
+import { useDashboard } from "../context/DashboardContext"
 
-function CategoriesContent() {
+export default function CategoriesPage() {
     const { checkingToken, userEmail, categories, expenses, fetchData } = useDashboard()
 
     const [newCategoryName, setNewCategoryName] = useState("")
@@ -90,9 +89,8 @@ function CategoriesContent() {
             <Sidebar />
 
             <section className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
-                <Header />
 
-                <div className="flex-1 flex flex-col p-6 md:p-10 max-w-[80%] mx-auto w-full min-h-0">
+                <div className="flex-1 flex flex-col p-4 sm:p-6 md:p-10 lg:max-w-[80%] mx-auto w-full min-h-0">
                     <div className="mb-6 flex-shrink-0">
                         <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-wide">Zarządzanie Kategoriami</h2>
                         <p className="text-slate-400 text-sm mt-1">Zarządzaj swoimi kategoriami wydatków, analizuj powiązane transakcje i ich sumy.</p>
@@ -116,7 +114,6 @@ function CategoriesContent() {
                         </div>
                     )}
 
-                    {/* Table card */}
                     <div className="flex-1 min-h-0 bg-[#131b2e] border border-slate-800/40 rounded-3xl p-6 md:p-8 shadow-2xl flex flex-col mb-6">
                         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-800/60 pb-6 flex-shrink-0">
                             <div>
@@ -151,13 +148,13 @@ function CategoriesContent() {
                             </form>
                         </div>
 
-                        <div className="flex-1 overflow-y-auto min-h-0 mt-6 custom-scrollbar pr-4">
+                        <div className="flex-1 overflow-auto min-h-0 mt-6 custom-scrollbar pr-4">
                             <table className="w-full text-left border-collapse">
                                 <thead className="sticky top-0 bg-[#131b2e] z-10">
                                     <tr className="border-b border-slate-800/60 text-slate-400 text-[10px] uppercase tracking-wider font-bold">
                                         <th className="pb-3 font-bold bg-[#131b2e]">Nazwa</th>
-                                        <th className="pb-3 font-bold bg-[#131b2e]">Typ</th>
-                                        <th className="pb-3 text-center font-bold bg-[#131b2e]">Liczba transakcji</th>
+                                        <th className="pb-3 font-bold bg-[#131b2e] hidden sm:table-cell">Typ</th>
+                                        <th className="pb-3 text-center font-bold bg-[#131b2e] hidden sm:table-cell">Liczba transakcji</th>
                                         <th className="pb-3 text-right font-bold bg-[#131b2e]">Łączna kwota</th>
                                         <th className="pb-3 text-right font-bold bg-[#131b2e]">Akcje</th>
                                     </tr>
@@ -176,7 +173,7 @@ function CategoriesContent() {
                                                 <td className="py-4 font-medium pl-2">
                                                     <span>{cat.name}</span>
                                                 </td>
-                                                <td className="py-4">
+                                                <td className="py-4 hidden sm:table-cell">
                                                     {cat.isSystem ? (
                                                         <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider bg-slate-800/40 px-2 py-0.5 rounded">
                                                             System
@@ -187,7 +184,7 @@ function CategoriesContent() {
                                                         </span>
                                                     )}
                                                 </td>
-                                                <td className="py-4 text-center">{count}</td>
+                                                <td className="py-4 text-center hidden sm:table-cell">{count}</td>
                                                 <td className="py-4 text-right font-bold text-slate-200">
                                                     {total.toFixed(2)} PLN
                                                 </td>
@@ -243,13 +240,5 @@ function CategoriesContent() {
                 </div>
             </section>
         </main>
-    )
-}
-
-export default function CategoriesPage() {
-    return (
-        <DashboardProvider>
-            <CategoriesContent />
-        </DashboardProvider>
     )
 }

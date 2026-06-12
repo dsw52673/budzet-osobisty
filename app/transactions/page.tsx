@@ -2,16 +2,12 @@
 
 import { useState } from "react"
 import Sidebar from "../components/dashboard/Sidebar"
-import Header from "../components/dashboard/Header"
 import BudgetAlert from "../components/dashboard/BudgetAlert"
-import BudgetModal from "../components/dashboard/BudgetModal"
-import ExpenseModal from "../components/dashboard/ExpenseModal"
-import AllTransactionsModal from "../components/dashboard/AllTransactionsModal"
 import TransactionFilters from "../components/dashboard/TransactionFilters"
 import TransactionTable from "../components/dashboard/TransactionTable"
-import { DashboardProvider, useDashboard } from "../context/DashboardContext"
+import { useDashboard } from "../context/DashboardContext"
 
-function TransactionsPageContent() {
+export default function TransactionsPage() {
     const {
         checkingToken,
         userEmail,
@@ -87,8 +83,6 @@ function TransactionsPageContent() {
             <Sidebar />
 
             <section className="flex-1 flex flex-col min-w-0 overflow-y-auto">
-                <Header />
-
                 <div className="p-6 md:p-10 space-y-8">
                     <BudgetAlert />
 
@@ -97,15 +91,6 @@ function TransactionsPageContent() {
                             <h2 className="text-3xl font-extrabold text-white tracking-wide">Transakcje</h2>
                             <p className="text-slate-400 text-sm mt-1">Przeglądaj i zarządzaj swoimi przepływami pieniężnymi.</p>
                         </div>
-                        <button
-                            onClick={handleAddTransactionClick}
-                            className="px-6 py-3.5 bg-[#b5c7e3] hover:bg-[#a7b9d5] text-[#0a1120] font-bold rounded-full cursor-pointer transition-all flex items-center gap-2 shadow-lg shadow-[#b5c7e3]/10"
-                        >
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-                            </svg>
-                            <span>Dodaj transakcję</span>
-                        </button>
                     </div>
 
                     <TransactionFilters
@@ -130,18 +115,6 @@ function TransactionsPageContent() {
                     />
                 </div>
             </section>
-
-            <BudgetModal />
-            <ExpenseModal />
-            <AllTransactionsModal />
         </main>
-    )
-}
-
-export default function TransactionsPage() {
-    return (
-        <DashboardProvider>
-            <TransactionsPageContent />
-        </DashboardProvider>
     )
 }

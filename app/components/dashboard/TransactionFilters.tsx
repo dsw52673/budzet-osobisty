@@ -66,14 +66,14 @@ export default function TransactionFilters({
                             type="date"
                             value={startDate}
                             onChange={(e) => setStartDate(e.target.value)}
-                            className="w-full px-4 py-3 bg-[#252f48] border border-transparent rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-500 text-sm cursor-pointer"
+                            className="w-full min-w-0 px-2 sm:px-4 py-2.5 sm:py-3 bg-[#252f48] border border-transparent rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-500 text-xs sm:text-sm cursor-pointer"
                         />
                         <span className="text-slate-505">—</span>
                         <input
                             type="date"
                             value={endDate}
                             onChange={(e) => setEndDate(e.target.value)}
-                            className="w-full px-4 py-3 bg-[#252f48] border border-transparent rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-500 text-sm cursor-pointer"
+                            className="w-full min-w-0 px-2 sm:px-4 py-2.5 sm:py-3 bg-[#252f48] border border-transparent rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-500 text-xs sm:text-sm cursor-pointer"
                         />
                     </div>
                 </div>

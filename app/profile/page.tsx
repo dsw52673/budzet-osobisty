@@ -1,12 +1,10 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import Link from "next/link"
 import Sidebar from "../components/dashboard/Sidebar"
-import Header from "../components/dashboard/Header"
-import { DashboardProvider, useDashboard } from "../context/DashboardContext"
+import { useDashboard } from "../context/DashboardContext"
 
-function ProfileContent() {
+export default function ProfilePage() {
     const { checkingToken, userEmail } = useDashboard()
 
     const [firstName, setFirstName] = useState("")
@@ -129,21 +127,8 @@ function ProfileContent() {
             <Sidebar />
 
             <section className="flex-1 flex flex-col min-w-0 overflow-y-auto">
-                <Header />
 
                 <div className="p-6 md:p-10 max-w-4xl mx-auto w-full space-y-6">
-                    <div className="flex items-center gap-3">
-                        <Link
-                            href="/"
-                            className="text-slate-400 hover:text-white transition-colors cursor-pointer flex items-center gap-1.5 text-sm font-medium"
-                        >
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                            </svg>
-                            Powrót do panelu
-                        </Link>
-                    </div>
-
                     <div>
                         <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-wide">Mój Profil</h2>
                         <p className="text-slate-400 text-sm mt-1">Zarządzaj swoimi danymi osobowymi oraz bezpieczeństwem konta.</p>
@@ -279,13 +264,5 @@ function ProfileContent() {
                 </div>
             </section>
         </main>
-    )
-}
-
-export default function ProfilePage() {
-    return (
-        <DashboardProvider>
-            <ProfileContent />
-        </DashboardProvider>
     )
 }

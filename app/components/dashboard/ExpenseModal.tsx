@@ -1,3 +1,5 @@
+"use client"
+
 import { useDashboard } from "../../context/DashboardContext"
 
 export default function ExpenseModal() {
@@ -60,7 +62,7 @@ export default function ExpenseModal() {
                     </div>
                 )}
 
-                <form onSubmit={handleAddExpense} className="space-y-4">
+                <form onSubmit={editingExpenseId ? handleEditExpense : handleAddExpense} className="space-y-4">
                     <div className="flex gap-3">
                         <div className="flex-1">
                             <label htmlFor="expense-amount-input" className="block text-xs font-bold text-slate-405 uppercase tracking-wider mb-2">Kwota</label>

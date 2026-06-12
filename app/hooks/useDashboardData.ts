@@ -8,7 +8,6 @@ export function useDashboardData() {
 
     const [isBudgetModalOpen, setIsBudgetModalOpen] = useState(false)
     const [isExpenseModalOpen, setIsExpenseModalOpen] = useState(false)
-    const [isAllTransactionsModalOpen, setIsAllTransactionsModalOpen] = useState(false)
     const [deletingId, setDeletingId] = useState<string | null>(null)
     const [editingExpenseId, setEditingExpenseId] = useState<string | null>(null)
 
@@ -20,6 +19,7 @@ export function useDashboardData() {
     const [expenseCurrency, setExpenseCurrency] = useState("PLN")
 
     const [isCatDropdownOpen, setIsCatDropdownOpen] = useState(false)
+    const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false)
 
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
@@ -147,7 +147,8 @@ export function useDashboardData() {
                     amount: Number(expenseAmount),
                     date: expenseDate ? new Date(expenseDate).toISOString() : new Date().toISOString(),
                     categoryId: expenseCategoryId,
-                    description: expenseDescription
+                    description: expenseDescription,
+                    currency: expenseCurrency
                 })
             })
 
@@ -163,6 +164,7 @@ export function useDashboardData() {
             setExpenseAmount("")
             setExpenseDescription("")
             setExpenseDate("")
+            setExpenseCurrency("PLN")
             setLoading(false)
             fetchData()
         } catch {
@@ -219,8 +221,6 @@ export function useDashboardData() {
         setIsBudgetModalOpen,
         isExpenseModalOpen,
         setIsExpenseModalOpen,
-        isAllTransactionsModalOpen,
-        setIsAllTransactionsModalOpen,
         deletingId,
         setDeletingId,
         editingExpenseId,
@@ -239,6 +239,8 @@ export function useDashboardData() {
         setExpenseCurrency,
         isCatDropdownOpen,
         setIsCatDropdownOpen,
+        isMobileSidebarOpen,
+        setIsMobileSidebarOpen,
         error,
         setError,
         loading,

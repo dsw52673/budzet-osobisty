@@ -14,6 +14,7 @@ export default function TransactionRow({ item }: TransactionRowProps) {
         setExpenseCategoryId,
         setExpenseDescription,
         setExpenseDate,
+        setExpenseCurrency,
         setIsExpenseModalOpen,
         handleDeleteExpense
     } = useDashboard()
@@ -98,25 +99,33 @@ export default function TransactionRow({ item }: TransactionRowProps) {
         setExpenseDescription(item.description || "")
         setExpenseDate(new Date(item.date).toISOString().split("T")[0])
         setExpenseCategoryId(item.categoryId)
+        setExpenseCurrency(item.currency || "PLN")
         setIsExpenseModalOpen(true)
     }
 
     return (
         <tr className="hover:bg-[#252f48]/20 transition-colors">
             <td className="py-4 font-semibold flex items-center gap-3">
-                <div className="w-9 h-9 rounded-full bg-[#252f48] flex items-center justify-center text-slate-200">
+                <div className="hidden sm:flex w-9 h-9 rounded-full bg-[#252f48] items-center justify-center text-slate-200 flex-shrink-0">
                     {getCategoryIcon(item.category?.name || "Inne")}
                 </div>
                 <span>{item.category?.name || "Inne"}</span>
             </td>
-            <td className="py-4 text-slate-400 font-medium max-w-[200px] truncate">
+            <td className="py-4 text-slate-400 font-medium max-w-[200px] truncate hidden sm:table-cell">
                 {item.description || "—"}
             </td>
-            <td className="py-4 text-slate-400 font-semibold">
+            <td className="py-4 text-slate-400 font-semibold hidden sm:table-cell">
                 {formatTransactionDate(item.date)}
             </td>
-            <td className="py-4 text-right font-black text-red-400">
-                -{Number(item.amount).toFixed(2)} PLN
+            <td className="py-4 text-right">
+                <div className="text-xs sm:text-sm font-bold sm:font-black text-red-400">
+                    -{Number(item.amount).toFixed(2)} {item.currency || "PLN"}
+                </div>
+                {item.currency && item.currency !== "PLN" && (
+                    <div className="text-[10px] text-slate-400 font-semibold mt-0.5">
+                        ~{Number(item.amountInBase).toFixed(2)} PLN
+                    </div>
+                )}
             </td>
             <td className="py-4 text-right">
                 {deletingId === item.id ? (
