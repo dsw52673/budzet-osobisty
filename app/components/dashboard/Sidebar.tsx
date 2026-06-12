@@ -14,7 +14,7 @@ export default function Sidebar() {
     }
 
     return (
-        <aside className="hidden md:flex flex-col w-64 bg-[#131b2e] border-r border-slate-800/40 p-6 flex-shrink-0">
+        <aside className="hidden md:flex flex-col w-64 h-screen sticky top-0 bg-[#131b2e] border-r border-slate-800/40 p-6 flex-shrink-0">
             <div className="flex items-center gap-3 mb-8">
                 <div className="w-10 h-10 bg-[#1b253b] rounded-xl flex items-center justify-center shadow-md">
                     <svg className="w-6 h-6 text-slate-200" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -65,6 +65,18 @@ export default function Sidebar() {
                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     <span>Transakcje</span>
+                </Link>
+                <Link
+                    href="/categories"
+                    className={`flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-colors cursor-pointer ${pathname === "/categories"
+                            ? "bg-[#252f48] text-white"
+                            : "text-slate-400 hover:text-white hover:bg-[#252f48]/40"
+                        }`}
+                >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581a1.5 1.5 0 002.122 0l4.318-4.318a1.5 1.5 0 000-2.122L11.16 3.659A1.5 1.5 0 0010.09 3zm-2.818 4.25a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                    </svg>
+                    <span>Kategorie</span>
                 </Link>
             </nav>
 

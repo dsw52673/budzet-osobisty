@@ -75,6 +75,7 @@ interface DashboardContextType {
     decrementBudget: () => void
     incrementAmount: () => void
     decrementAmount: () => void
+    fetchData: () => Promise<void>
 }
 
 const DashboardContext = createContext<DashboardContextType | undefined>(undefined)

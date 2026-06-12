@@ -252,5 +252,6 @@ export function useDashboardData() {
         decrementBudget,
         incrementAmount,
         decrementAmount,
+        fetchData,
     }
 }
